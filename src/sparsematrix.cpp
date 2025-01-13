@@ -2,6 +2,7 @@
 #include <iostream>
 
 SparseMatrix::SparseMatrix(){
+  // Inicializa a matriz esparsa
   head = nullptr;
 }
 
@@ -43,6 +44,30 @@ void SparseMatrix::insert(int i, int j, double value){
     } else {
       anterior->abaixo = novoNo;
     }
-  }
-  
+  }  
 }
+
+// Método que devolve o valor de uma posição da matriz esparsa
+double SparseMatrix::get(int i, int j){
+
+   // Validação dos índices
+    if (i < 0 || j < 0) {
+        throw std::out_of_range("Índices fora do intervalo válido!");
+    }
+
+    // Buscar o valor na matriz esparsa
+    Node* atual = head;
+
+    // Percorrer a matriz esparsa
+    while(atual != nullptr && (atual->linha < i || (atual->linha == i && atual->coluna < j))){
+      // Atualizar o nó atual
+      atual = atual->abaixo;
+    }
+
+    // Verificar se o valor foi encontrado
+    if(atual != nullptr && atual->linha == i && atual->coluna == j){
+      return atual->valor;
+    } else {
+      return 0;
+    }  
+  }
