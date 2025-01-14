@@ -71,3 +71,26 @@ double SparseMatrix::get(int i, int j){
       return 0;
     }  
   }
+
+  // Método que imprime a matriz esparsa
+  void SparseMatrix::print(){
+
+    // Determinar o maior índice de linha e coluna presentes
+    int maxRow = 0, maxCol = 0;
+
+    // Percorrer a matriz esparsa
+    Node* aux = head;
+    while(aux != nullptr){
+      if(aux->linha > maxRow) maxRow = aux->linha;
+      if(aux->coluna > maxCol) maxCol = aux->coluna;
+      aux = aux->abaixo;
+    }
+
+    // Imprimir todos os elementos, inclusive zeros
+    for(int i = 0; i <= maxRow; i++){
+      for(int j = 0; j <= maxCol; j++){
+        std::cout << get(i, j) << " ";
+      }
+      std::cout << std::endl;
+    }
+  }
