@@ -1,9 +1,11 @@
 #include "SparseMatrix.h"
 #include <iostream>
 
-SparseMatrix::SparseMatrix(){
+SparseMatrix::SparseMatrix(int linhas, int colunas){
   // Inicializa a matriz esparsa
   head = nullptr;
+  int linhas = n;
+  int colunas = m;
 }
 
 void SparseMatrix::insert(int i, int j, double value){
@@ -94,3 +96,4 @@ double SparseMatrix::get(int i, int j){
       std::cout << std::endl;
     }
   }
+ 
