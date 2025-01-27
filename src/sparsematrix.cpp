@@ -96,4 +96,52 @@ double SparseMatrix::get(int i, int j){
       std::cout << std::endl;
     }
   }
+
+  SparseMatrix& SparseMatrix::operator+(SparseMatrix& matrix) {
+
+    if(this->m != matrix.m || this->n != matrix.n){
+      throw std::out_of_range("Não foi possivel somar");
+    }
+
+    SparseMatrix result(this->m, this->n);
+    
+    for(int i = 0; i < this->m; i++){
+      for(int j = 0; j < this->n; j++){
+        result.insert(i, j, this->get(i, j) + matrix.get(i, j));
+      }
+    }
+
+    return result;
+
+  }
+
+  SparseMatrix& SparseMatrix::operator*(SparseMatrix& matrix){
+    if(this->n != matrix.m){
+      throw std::out_of_range("Não é possivel multiplicar");
+    }
+
+     SparseMatrix result(m, matrix.n);
+
+     // Declara uma variável auxiliar a para armazenar o valor acumulado de cada elemento
+     // da matriz resultado
+     double a;
+
+    for(int i = 0; i < this->m; i++){ 
+      for(int j = 0; j < matrix.n; j++){ 
+        a = 0.0; 
+
+        // Calculo do elemento resultante
+        for(int k = 0; k < this->n; k++){ // Itera sobre os indices intermediários para calcular o produto escalar
+          a += this->get(i, k) * matrix.get(k, j);
+        }
+          
+        if(a != 0.0){
+          result.insert(i, j, a);
+        }
+      }
+    }
+
+    // Retorno
+    return result;
+  }
  
