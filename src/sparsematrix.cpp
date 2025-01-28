@@ -1,12 +1,29 @@
 #include "SparseMatrix.h"
 #include <iostream>
 
+SparseMatrix::SparseMatrix(){
+  this->head = nullptr;
+  this->n = 0;
+  this->m = 0;
+}
+
 SparseMatrix::SparseMatrix(int linhas, int colunas){
   // Inicializa a matriz esparsa
-  head = nullptr;
-  int linhas = n;
-  int colunas = m;
+  this->head = nullptr;
+  this->m = linhas;
+  this->n = colunas;
 }
+
+SparseMatrix::~SparseMatrix() {
+    Node* atual = head;
+    while (atual != nullptr) {
+        Node* temp = atual;
+        atual = atual->abaixo;
+        delete temp; 
+    }
+    head = nullptr;
+}
+
 
 void SparseMatrix::insert(int i, int j, double value){
 
@@ -24,9 +41,9 @@ void SparseMatrix::insert(int i, int j, double value){
   Node* atual = head;
   Node* anterior = nullptr;
 
-  while(atual != nullptr && (atual->linha < i || (atual->linha == i && atual->coluna < j))){
-    anterior = atual;
-    atual = atual->abaixo;
+  while (atual != nullptr && (atual->linha < i || (atual->linha == i && atual->coluna < j))) {
+        anterior = atual;
+        atual = atual->abaixo;
   }
 
   if(atual != nullptr && atual->linha == i && atual->coluna == j){
@@ -61,43 +78,35 @@ double SparseMatrix::get(int i, int j){
     Node* atual = head;
 
     // Percorrer a matriz esparsa
-    while(atual != nullptr && (atual->linha < i || (atual->linha == i && atual->coluna < j))){
-      // Atualizar o nó atual
-      atual = atual->abaixo;
+    while (atual != nullptr) {
+        // Se encontrar o nó com os índices (i, j), retornar o valor
+        if (atual->linha == i && atual->coluna == j) {
+            return atual->valor;
+        }
+        // Se passar da linha ou coluna desejada, pode parar (lista ordenada)
+        if (atual->linha > i || (atual->linha == i && atual->coluna > j)) {
+            break;
+        }
+        atual = atual->abaixo;
     }
 
-    // Verificar se o valor foi encontrado
-    if(atual != nullptr && atual->linha == i && atual->coluna == j){
-      return atual->valor;
-    } else {
-      return 0;
-    }  
+    // Se o valor não foi encontrado, retornar 0
+    return 0;
   }
 
   // Método que imprime a matriz esparsa
   void SparseMatrix::print(){
 
-    // Determinar o maior índice de linha e coluna presentes
-    int maxRow = 0, maxCol = 0;
-
-    // Percorrer a matriz esparsa
-    Node* aux = head;
-    while(aux != nullptr){
-      if(aux->linha > maxRow) maxRow = aux->linha;
-      if(aux->coluna > maxCol) maxCol = aux->coluna;
-      aux = aux->abaixo;
-    }
-
     // Imprimir todos os elementos, inclusive zeros
-    for(int i = 0; i <= maxRow; i++){
-      for(int j = 0; j <= maxCol; j++){
+    for(int i = 0; i < this->m; i++){
+      for(int j = 0; j < this->n; j++){
         std::cout << get(i, j) << " ";
       }
       std::cout << std::endl;
     }
   }
 
-  SparseMatrix& SparseMatrix::operator+(SparseMatrix& matrix) {
+  SparseMatrix SparseMatrix::operator+(SparseMatrix& matrix) {
 
     if(this->m != matrix.m || this->n != matrix.n){
       throw std::out_of_range("Não foi possivel somar");
@@ -115,12 +124,12 @@ double SparseMatrix::get(int i, int j){
 
   }
 
-  SparseMatrix& SparseMatrix::operator*(SparseMatrix& matrix){
+  SparseMatrix SparseMatrix::operator*(SparseMatrix& matrix) {
     if(this->n != matrix.m){
       throw std::out_of_range("Não é possivel multiplicar");
     }
 
-     SparseMatrix result(m, matrix.n);
+     SparseMatrix result(this->m, matrix.n);
 
      // Declara uma variável auxiliar a para armazenar o valor acumulado de cada elemento
      // da matriz resultado

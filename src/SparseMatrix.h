@@ -18,12 +18,10 @@ class SparseMatrix{
   Node *head;
   
   // Construtor padrão
-  SparseMatrix(int linhas, int colunas){
-    // Inicializa a matriz esparsa
-    head = nullptr;
-    n = linhas;
-    m = colunas;
-  }
+  SparseMatrix();
+
+  // Construtor com parâmetros
+  SparseMatrix(int linhas, int colunas);
 
   // Destructor padrão
   ~SparseMatrix();
@@ -38,10 +36,10 @@ class SparseMatrix{
   void print();
 
   // Sobrecarga de operador de multiplicação
-  SparseMatrix& operator*(SparseMatrix& matrix);
+  SparseMatrix operator*(SparseMatrix& matrix);
 
   // Sobrecarga do operador de soma
-  SparseMatrix& operator+(SparseMatrix& matrix);
+  SparseMatrix operator+(SparseMatrix& matrix);
 
 };
 #endif
