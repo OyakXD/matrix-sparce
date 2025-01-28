@@ -35,6 +35,9 @@ class SparseMatrix{
   // Método que mostra a matriz esparsa
   void print();
 
+  // Método que libera a memória e altera as dimensões da matriz esparsa
+  void resize(int linhas, int colunas);
+
   // Sobrecarga de operador de multiplicação
   SparseMatrix operator*(SparseMatrix& matrix);
 
@@ -42,4 +45,5 @@ class SparseMatrix{
   SparseMatrix operator+(SparseMatrix& matrix);
 
 };
+
 #endif

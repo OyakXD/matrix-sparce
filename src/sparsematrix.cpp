@@ -28,7 +28,7 @@ SparseMatrix::~SparseMatrix() {
 void SparseMatrix::insert(int i, int j, double value){
 
   // Validação dos índices
-  if(i < 0 || j < 0){
+  if (i < 1 || i > this->n || j < 1 || j > this->m){
     throw std::out_of_range("Índices negativos não são permitidos.");
   }
 
@@ -98,12 +98,25 @@ double SparseMatrix::get(int i, int j){
   void SparseMatrix::print(){
 
     // Imprimir todos os elementos, inclusive zeros
-    for(int i = 0; i < this->m; i++){
-      for(int j = 0; j < this->n; j++){
+    for(int i = 1; i <= this->m; i++){
+      for(int j = 1; j <= this->n; j++){
         std::cout << get(i, j) << " ";
       }
       std::cout << std::endl;
     }
+  }
+
+  void SparseMatrix::resize(int linhas, int colunas){
+    Node* atual = head;
+    while (atual != nullptr) {
+      Node* temp = atual;
+      atual = atual->abaixo;
+      delete temp;
+    }
+
+    this->head = nullptr;
+    this->m = linhas;
+    this->n = colunas;
   }
 
   SparseMatrix SparseMatrix::operator+(SparseMatrix& matrix) {
