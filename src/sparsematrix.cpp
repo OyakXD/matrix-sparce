@@ -70,9 +70,10 @@ void SparseMatrix::insert(int i, int j, double value){
 double SparseMatrix::get(int i, int j){
 
    // Validação dos índices
-    if (i < 0 || j < 0) {
-        throw std::out_of_range("Índices fora do intervalo válido!");
+    if(i < 1 || j < 1 || i > this->n || j > this->m){
+      throw std::out_of_range("Índices fora do intervalo válido!");
     }
+
 
     // Buscar o valor na matriz esparsa
     Node* atual = head;
@@ -127,8 +128,8 @@ double SparseMatrix::get(int i, int j){
 
     SparseMatrix result(this->m, this->n);
     
-    for(int i = 0; i < this->m; i++){
-      for(int j = 0; j < this->n; j++){
+    for(int i = 1; i <= this->m; i++){
+      for(int j = 1; j <= this->n; j++){
         result.insert(i, j, this->get(i, j) + matrix.get(i, j));
       }
     }
@@ -148,12 +149,12 @@ double SparseMatrix::get(int i, int j){
      // da matriz resultado
      double a;
 
-    for(int i = 0; i < this->m; i++){ 
-      for(int j = 0; j < matrix.n; j++){ 
+    for(int i = 1; i <= this->m; i++){ 
+      for(int j = 1; j <= matrix.n; j++){ 
         a = 0.0; 
 
         // Calculo do elemento resultante
-        for(int k = 0; k < this->n; k++){ // Itera sobre os indices intermediários para calcular o produto escalar
+        for(int k = 1; k <= this->n; k++){ // Itera sobre os indices intermediários para calcular o produto escalar
           a += this->get(i, k) * matrix.get(k, j);
         }
           
