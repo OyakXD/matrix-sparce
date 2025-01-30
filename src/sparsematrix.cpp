@@ -14,6 +14,18 @@ SparseMatrix::SparseMatrix(int linhas, int colunas){
   this->n = colunas;
 }
 
+SparseMatrix::SparseMatrix(const SparseMatrix& matrix){
+  this->m = matrix.m;
+  this->n = matrix.n;
+  this->head = nullptr;
+
+  Node* atual = matrix.head;
+  while(atual != nullptr){
+    this->insert(atual->linha, atual->coluna, atual->valor);
+    atual = atual->abaixo;
+  }
+}
+
 SparseMatrix::~SparseMatrix() {
     Node* atual = head;
     while (atual != nullptr) {
@@ -24,11 +36,10 @@ SparseMatrix::~SparseMatrix() {
     head = nullptr;
 }
 
-
 void SparseMatrix::insert(int i, int j, double value){
 
   // Validação dos índices
-  if (i < 1 || i > this->n || j < 1 || j > this->m){
+  if(i < 0 || j < 0){
     throw std::out_of_range("Índices negativos não são permitidos.");
   }
 
@@ -66,14 +77,12 @@ void SparseMatrix::insert(int i, int j, double value){
   }  
 }
 
-// Método que devolve o valor de uma posição da matriz esparsa
 double SparseMatrix::get(int i, int j){
 
    // Validação dos índices
-    if(i < 1 || j < 1 || i > this->n || j > this->m){
-      throw std::out_of_range("Índices fora do intervalo válido!");
+    if (i < 0 || j < 0) {
+        throw std::out_of_range("Índices fora do intervalo válido!");
     }
-
 
     // Buscar o valor na matriz esparsa
     Node* atual = head;
@@ -95,19 +104,18 @@ double SparseMatrix::get(int i, int j){
     return 0;
   }
 
-  // Método que imprime a matriz esparsa
   void SparseMatrix::print(){
 
     // Imprimir todos os elementos, inclusive zeros
-    for(int i = 1; i <= this->m; i++){
-      for(int j = 1; j <= this->n; j++){
+    for(int i = 0; i < this->m; i++){
+      for(int j = 0; j < this->n; j++){
         std::cout << get(i, j) << " ";
       }
       std::cout << std::endl;
     }
   }
 
-  void SparseMatrix::resize(int linhas, int colunas){
+    void SparseMatrix::resize(int linhas, int colunas){
     Node* atual = head;
     while (atual != nullptr) {
       Node* temp = atual;
@@ -128,8 +136,8 @@ double SparseMatrix::get(int i, int j){
 
     SparseMatrix result(this->m, this->n);
     
-    for(int i = 1; i <= this->m; i++){
-      for(int j = 1; j <= this->n; j++){
+    for(int i = 0; i < this->m; i++){
+      for(int j = 0; j < this->n; j++){
         result.insert(i, j, this->get(i, j) + matrix.get(i, j));
       }
     }
@@ -149,12 +157,12 @@ double SparseMatrix::get(int i, int j){
      // da matriz resultado
      double a;
 
-    for(int i = 1; i <= this->m; i++){ 
-      for(int j = 1; j <= matrix.n; j++){ 
+    for(int i = 0; i < this->m; i++){ 
+      for(int j = 0; j < matrix.n; j++){ 
         a = 0.0; 
 
         // Calculo do elemento resultante
-        for(int k = 1; k <= this->n; k++){ // Itera sobre os indices intermediários para calcular o produto escalar
+        for(int k = 0; k < this->n; k++){ // Itera sobre os indices intermediários para calcular o produto escalar
           a += this->get(i, k) * matrix.get(k, j);
         }
           
@@ -166,5 +174,33 @@ double SparseMatrix::get(int i, int j){
 
     // Retorno
     return result;
+  }
+ 
+
+  SparseMatrix SparseMatrix::operator=(const SparseMatrix& matrix){
+    if(this != &matrix){
+      
+      // Limpar memória do objeto atual.
+      Node* atual = head;
+      while(atual != nullptr){
+        Node* temp = atual;
+        atual = atual->abaixo;
+        delete temp;
+      }
+
+      // Copiar os atributos básicos
+      this->m = matrix.m;
+      this->n = matrix.n;
+      this->head = nullptr;
+
+      // Copiando os nós da matriz esparsa
+      Node* outroAtual = matrix.head;
+      while(outroAtual != nullptr){
+        this->insert(outroAtual->linha, outroAtual->coluna, outroAtual->valor);
+        outroAtual = outroAtual->abaixo;
+      }
+    }
+
+    return *this;
   }
  
