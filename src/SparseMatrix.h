@@ -20,6 +20,9 @@ class SparseMatrix{
   // Construtor padrão
   SparseMatrix();
 
+  // Construtor de cópia
+  SparseMatrix(const SparseMatrix& matrix);
+
   // Construtor com parâmetros
   SparseMatrix(int linhas, int colunas);
 
@@ -43,6 +46,9 @@ class SparseMatrix{
 
   // Sobrecarga do operador de soma
   SparseMatrix operator+(SparseMatrix& matrix);
+
+  // Sobrecarga do operador de atribuição
+  SparseMatrix operator=(const SparseMatrix& matrix);
 
 };
 
