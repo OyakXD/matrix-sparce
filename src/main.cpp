@@ -96,5 +96,5 @@ int main() {
           default:
             cout << "Opção inválida!\n";
         }
-    }while(num != 5);
+    } while(num != 5);
 }
