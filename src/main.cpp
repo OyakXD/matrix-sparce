@@ -4,9 +4,12 @@
 using namespace std;
 
 void readSparseMatrix(SparseMatrix& m, string arquivo){
-  ifstream arquivom(arquivo); // abre e lê o arquivo
+  string caminho = "../fileTests/" + arquivo;
+
+  ifstream arquivom(caminho); // abre e lê o arquivo
+
   if(!arquivom.is_open()){ // caso não seja possível abrir o arquivo
-    cout << "Erro ao ler o arquivo\n" << endl; // saída
+    cerr << "Erro ao ler o arquivo\n" << endl; // saída
     return;
   }
 
@@ -50,51 +53,52 @@ void opcoes() {
 }
 
 int main() {
-    SparseMatrix A, B, C;
-    string arquivo;
-    int num;
+  SparseMatrix A, B, C;
+  string arquivo;
+  int num;
 
-    do{
-        opcoes();
-        cin >> num;
+  do{
+    opcoes();
+    cin >> num;
 
-        switch(num){
-          case 1:
-            cout << "Digite o nome do arquivo: ";
-            cin >> arquivo;
-            readSparseMatrix(A, arquivo);
-            cout << "Matriz carregada com sucesso.\n";
-            break;
+    switch(num){
+      case 1:
+        cout << "\nDigite o nome do arquivo: ";
+        cin >> arquivo;
+        readSparseMatrix(A, arquivo);
+        cout << "\nMatriz carregada com sucesso.\n";
+        break;
 
-          case 2:
-            cout << "Matriz atual:\n";
-            A.print();
-            break;
+      case 2:
+        cout << "\nMatriz atual:\n";
+        A.print();
+        break;
 
-          case 3:
-            cout << "Digite o nome do arquivo para a segunda matriz: ";
-            cin >> arquivo;
-            readSparseMatrix(B, arquivo);
-            C = sum(A, B);
-            cout << "Resultado da soma:\n";
-            C.print();
-            break;
+      case 3:
+        cout << "\nDigite o nome do arquivo para a segunda matriz: ";
+        cin >> arquivo;
+        readSparseMatrix(B, arquivo);
+        C = sum(A, B);
+        cout << "\nResultado da soma:\n";
+        C.print();
+        break;
 
-          case 4:
-            cout << "Digite o nome do arquivo para a segunda matriz: ";
-            cin >> arquivo;
-            readSparseMatrix(B, arquivo);
-            C = multiply(A, B);
-            cout << "Resultado da multiplicação:\n";
-            C.print();
-            break;
+      case 4:
+        cout << "\nDigite o nome do arquivo para a segunda matriz: ";
+        cin >> arquivo;
+        readSparseMatrix(B, arquivo);
+        C = multiply(A, B);
+        cout << "\nResultado da multiplicação:\n";
+        C.print();
+        break;
 
-          case 5:
-            cout << "Saindo...\n";
-            break;
+      case 5:
+        cout << "\nSaindo...\n";
+        break;
 
-          default:
-            cout << "Opção inválida!\n";
-        }
-    } while(num != 5);
+      default:
+        cout << "\nOpção inválida!\n";
+        break;
+    }
+  }while(num != 5);
 }

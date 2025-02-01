@@ -39,8 +39,8 @@ SparseMatrix::~SparseMatrix() {
 void SparseMatrix::insert(int i, int j, double value){
 
   // Validação dos índices
-  if(i < 0 || j < 0){
-    throw std::out_of_range("Índices negativos não são permitidos.");
+  if(i < 1 || j < 1 || i > this->n || j > this->m){
+    throw std::out_of_range("Índices fora do intervalo válido!");
   }
 
   // Ignorar valores iguais a 0
@@ -80,9 +80,9 @@ void SparseMatrix::insert(int i, int j, double value){
 double SparseMatrix::get(int i, int j){
 
    // Validação dos índices
-    if (i < 0 || j < 0) {
-        throw std::out_of_range("Índices fora do intervalo válido!");
-    }
+  if(i < 1 || j < 1 || i > this->n || j > this->m){
+    throw std::out_of_range("Índices fora do intervalo válido!");
+  }
 
     // Buscar o valor na matriz esparsa
     Node* atual = head;
@@ -107,8 +107,8 @@ double SparseMatrix::get(int i, int j){
   void SparseMatrix::print(){
 
     // Imprimir todos os elementos, inclusive zeros
-    for(int i = 0; i < this->m; i++){
-      for(int j = 0; j < this->n; j++){
+    for(int i = 1; i <= this->m; i++){
+      for(int j = 1; j <= this->n; j++){
         std::cout << get(i, j) << " ";
       }
       std::cout << std::endl;
@@ -131,13 +131,13 @@ double SparseMatrix::get(int i, int j){
   SparseMatrix SparseMatrix::operator+(SparseMatrix& matrix) {
 
     if(this->m != matrix.m || this->n != matrix.n){
-      throw std::out_of_range("Não foi possivel somar");
+      throw std::out_of_range("Não foi possivel somar você precisa inserir uma coordenadas dentro dos limites!");
     }
 
     SparseMatrix result(this->m, this->n);
     
-    for(int i = 0; i < this->m; i++){
-      for(int j = 0; j < this->n; j++){
+    for(int i = 1; i <= this->m; i++){
+      for(int j = 1; j <= this->n; j++){
         result.insert(i, j, this->get(i, j) + matrix.get(i, j));
       }
     }
@@ -148,7 +148,7 @@ double SparseMatrix::get(int i, int j){
 
   SparseMatrix SparseMatrix::operator*(SparseMatrix& matrix) {
     if(this->n != matrix.m){
-      throw std::out_of_range("Não é possivel multiplicar");
+      throw std::out_of_range("Não foi possivel somar você precisa inserir uma coordenadas dentro dos limites!");
     }
 
      SparseMatrix result(this->m, matrix.n);
@@ -157,12 +157,12 @@ double SparseMatrix::get(int i, int j){
      // da matriz resultado
      double a;
 
-    for(int i = 0; i < this->m; i++){ 
-      for(int j = 0; j < matrix.n; j++){ 
+    for(int i = 1; i <= this->m; i++){ 
+      for(int j = 1; j <= matrix.n; j++){ 
         a = 0.0; 
 
         // Calculo do elemento resultante
-        for(int k = 0; k < this->n; k++){ // Itera sobre os indices intermediários para calcular o produto escalar
+        for(int k = 1; k <= this->n; k++){ // Itera sobre os indices intermediários para calcular o produto escalar
           a += this->get(i, k) * matrix.get(k, j);
         }
           
