@@ -128,6 +128,16 @@ double SparseMatrix::get(int i, int j){
     this->n = colunas;
   }
 
+  void SparseMatrix::clear() {
+    Node* atual = head;
+    while (atual != nullptr) {
+      Node* temp = atual;
+      atual = atual->abaixo;
+      delete temp;
+    }
+    head = nullptr;
+  }
+
   SparseMatrix SparseMatrix::operator+(SparseMatrix& matrix) {
 
     if(this->m != matrix.m || this->n != matrix.n){

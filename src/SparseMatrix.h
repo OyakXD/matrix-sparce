@@ -41,6 +41,9 @@ class SparseMatrix{
   // Método que libera a memória e altera as dimensões da matriz esparsa
   void resize(int linhas, int colunas);
 
+  // remove elementos das matrizes
+  void clear();
+
   // Sobrecarga de operador de multiplicação
   SparseMatrix operator*(SparseMatrix& matrix);
 
