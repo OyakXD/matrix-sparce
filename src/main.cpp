@@ -44,7 +44,7 @@ SparseMatrix multiply (SparseMatrix& A, SparseMatrix& B){
 }
 
 void opcoes() {
-    cout << "\n================================= HELP ===================================\n";
+    cout << "\n================================= AJUDA ===================================\n";
     cout << "sair ............... Fecha o Programa\n";
     cout << "criar m n ......... Cria uma nova matrix com m linhas e n colunas\n";
     cout << "mostrar i ............. Escreve a matrix i no terminal\n";
