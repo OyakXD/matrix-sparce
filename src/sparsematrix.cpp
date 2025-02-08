@@ -39,7 +39,7 @@ SparseMatrix::~SparseMatrix() {
 void SparseMatrix::insert(int i, int j, double value){
 
   // Validação dos índices
-  if(i < 1 || j < 1 || i > this->n || j > this->m){
+  if(i < 1 || j < 1 || i > this->m || j > this->n){
     throw std::out_of_range("Índices fora do intervalo válido!");
   }
 
@@ -80,7 +80,7 @@ void SparseMatrix::insert(int i, int j, double value){
 double SparseMatrix::get(int i, int j){
 
    // Validação dos índices
-  if(i < 1 || j < 1 || i > this->n || j > this->m){
+  if(i < 1 || j < 1 || i > this->m || j > this->n){
     throw std::out_of_range("Índices fora do intervalo válido!");
   }
 
