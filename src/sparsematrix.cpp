@@ -158,7 +158,7 @@ double SparseMatrix::get(int i, int j){
 
   SparseMatrix SparseMatrix::operator*(SparseMatrix& matrix) {
     if(this->n != matrix.m){
-      throw std::out_of_range("Não foi possivel somar você precisa inserir uma coordenadas dentro dos limites!");
+      throw std::out_of_range("Não foi possivel multiplicar você precisa inserir uma coordenadas dentro dos limites!");
     }
 
      SparseMatrix result(this->m, matrix.n);
